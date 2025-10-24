@@ -601,14 +601,14 @@
       brandsSection.insertBefore(noticeDiv, container);
     }
 
-    function createBrandCard(b) {
+    function createBrandCard(b, displayNumber) {
       const card = document.createElement("div");
       card.className = "brand-card";
 
       card.innerHTML = `
         <div class="d-flex align-items-center justify-content-between flex-wrap">
           <div class="d-flex align-items-center">
-            <div class="badge-number me-3">${b.id}</div>
+            <div class="badge-number me-3">${displayNumber}</div>
             <img src="${b.logo}" alt="${b.name} Casino Review" class="brand-logo me-3">
             <div>
               <p class="mb-0">${b.offer}</p>
@@ -628,8 +628,9 @@
 
     function loadBrands(count) {
       const brandsToShow = filteredBrands.slice(displayedCount, displayedCount + count);
-      brandsToShow.forEach(b => {
-        container.appendChild(createBrandCard(b));
+      brandsToShow.forEach((b, index) => {
+        const displayNumber = displayedCount + index + 1;
+        container.appendChild(createBrandCard(b, displayNumber));
       });
       displayedCount += brandsToShow.length;
       

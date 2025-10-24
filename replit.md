@@ -2,6 +2,24 @@
 
 TheCasinos.live is an independent online casino review and comparison website designed to help users discover and evaluate online casino platforms. The site features casino reviews, bonus comparisons, and trusted platform recommendations, targeting users seeking gambling entertainment options. The website emphasizes responsible gambling practices (18+ only) and provides comprehensive information to help users make informed decisions.
 
+**Key Features:**
+- Geo-targeted casino listings based on user location
+- Display 10 casinos initially with "See More" functionality
+- Automatic location detection via IP geolocation
+- Sequential numbering (1, 2, 3...) for filtered results
+- Compliance notices (18+, affiliate disclosure, responsible gambling)
+
+# Recent Changes (October 24, 2025)
+
+- Implemented geo-targeting: Casinos filtered by user's country automatically
+- Added IPinfo.io geolocation API for location detection
+- Created compact notice bar for age restriction and affiliate disclosure
+- Added "See More Casinos" button to load additional brands (10 at a time)
+- Fixed sequential numbering for filtered casino results
+- Added comprehensive compliance features for Google advertising policies
+- Integrated Google Analytics 4 placeholder
+- Added responsible gambling resources and disclaimers
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
