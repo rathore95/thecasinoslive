@@ -261,7 +261,7 @@
   <!-- Header -->
   <header class="text-center py-5">
     <div class="container">
-      <h1 class="display-4">Best Online Casinos in 2025</h1>
+      <h1 id="main-heading" class="display-4">Best Online Casinos in 2025</h1>
       <p class="lead">Independent Reviews & Comparisons</p>
     </div>
   </header>
@@ -577,28 +577,14 @@
       }
     }
 
-    function showGeoNotice(country) {
-      const noticeDiv = document.createElement('div');
-      noticeDiv.className = 'alert alert-info';
-      noticeDiv.style.cssText = 'margin-bottom: 20px; background: #e7f3ff; border: 2px solid #007bff; padding: 15px; border-radius: 8px;';
-      
+    function updateHeaderWithCountry(country) {
+      const heading = document.getElementById('main-heading');
       if (country) {
         const cName = countryNames[country] || country;
-        noticeDiv.innerHTML = `
-          <i class="fas fa-map-marker-alt me-2"></i>
-          <strong>Showing casinos available in ${cName}</strong> - 
-          <small>We detected your location and filtered casinos accordingly.</small>
-        `;
+        heading.textContent = `Best Online Casinos in ${cName} 2025`;
       } else {
-        noticeDiv.innerHTML = `
-          <i class="fas fa-globe me-2"></i>
-          <strong>Showing all available casinos</strong> - 
-          <small>Unable to detect your location. All casinos are displayed.</small>
-        `;
+        heading.textContent = 'Best Online Casinos in 2025';
       }
-      
-      const brandsSection = document.getElementById('brands');
-      brandsSection.insertBefore(noticeDiv, container);
     }
 
     function createBrandCard(b, displayNumber) {
@@ -682,7 +668,7 @@
         filteredBrands = brands;
       }
 
-      showGeoNotice(userCountry);
+      updateHeaderWithCountry(userCountry);
       initializeBrands();
     }
 
