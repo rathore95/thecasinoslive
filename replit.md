@@ -19,8 +19,11 @@ TheCasinos.live is an independent online casino review and comparison website de
 - Session-based authentication using express-session
 - Credentials stored securely in environment variables (ADMIN_USERNAME, ADMIN_PASSWORD)
 - Auto-redirect to login page for unauthorized access attempts
+- **Logo upload feature** - Direct file upload instead of manual path entry (using Multer)
+- **Payment method checkboxes** - Simple selection (Visa, Mastercard, Crypto, UPI, etc.) instead of Font Awesome codes
+- **Expanded country list** - 100+ countries available for geo-targeting
 - Moved casino data from HTML to JSON file (casinos.json)
-- Implemented RESTful API endpoints: GET /api/casinos, POST /api/casinos, PUT /api/casinos/:id, DELETE /api/casinos/:id
+- Implemented RESTful API endpoints: GET /api/casinos, POST /api/casinos, PUT /api/casinos/:id, DELETE /api/casinos/:id, POST /api/upload-logo
 - Main site now loads casino data dynamically from API
 - Changes made in admin dashboard instantly reflect on main site
 
@@ -50,10 +53,14 @@ Preferred communication style: Simple, everyday language.
 - Rationale: Enables dynamic content updates without code changes
 
 **API Endpoints:**
-- GET /api/casinos - Retrieve all casino brands
-- POST /api/casinos - Add new casino brand
-- PUT /api/casinos/:id - Update existing casino brand
-- DELETE /api/casinos/:id - Remove casino brand
+- GET /api/casinos - Retrieve all casino brands (public)
+- POST /api/casinos - Add new casino brand (authenticated)
+- PUT /api/casinos/:id - Update existing casino brand (authenticated)
+- DELETE /api/casinos/:id - Remove casino brand (authenticated)
+- POST /api/upload-logo - Upload casino logo image (authenticated)
+- POST /api/admin/login - Admin authentication
+- POST /api/admin/logout - Admin logout
+- GET /api/admin/check - Check authentication status
 
 **Middleware:**
 - express.json() - Parse JSON request bodies
