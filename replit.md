@@ -3,6 +3,7 @@
 TheCasinos.live is an independent online casino review and comparison website designed to help users discover and evaluate online casino platforms. The site features casino reviews, bonus comparisons, and trusted platform recommendations, targeting users seeking gambling entertainment options. The website emphasizes responsible gambling practices (18+ only) and provides comprehensive information to help users make informed decisions.
 
 **Key Features:**
+- **Admin Dashboard** - Manage casinos without touching code (add/edit/delete)
 - Geo-targeted casino listings based on user location
 - Display 10 casinos initially with "See More" functionality
 - Automatic location detection via IP geolocation
@@ -11,6 +12,15 @@ TheCasinos.live is an independent online casino review and comparison website de
 
 # Recent Changes (October 24, 2025)
 
+**Admin Dashboard Implementation:**
+- Built full-stack application with Node.js/Express backend
+- Created admin dashboard at /admin.html for managing casino brands
+- Moved casino data from HTML to JSON file (casinos.json)
+- Implemented RESTful API endpoints: GET /api/casinos, POST /api/casinos, PUT /api/casinos/:id, DELETE /api/casinos/:id
+- Main site now loads casino data dynamically from API
+- Changes made in admin dashboard instantly reflect on main site
+
+**Previous Features:**
 - Implemented geo-targeting: Casinos filtered by user's country automatically
 - Added IPinfo.io geolocation API for location detection
 - Created compact notice bar for age restriction and affiliate disclosure
@@ -26,21 +36,45 @@ Preferred communication style: Simple, everyday language.
 
 # System Architecture
 
+## Backend Architecture
+
+**Node.js/Express Server**
+- Technology: Node.js with Express framework
+- Port: 5000 (configured for Replit environment)
+- Data Storage: JSON file (casinos.json)
+- Purpose: RESTful API for casino data management
+- Rationale: Enables dynamic content updates without code changes
+
+**API Endpoints:**
+- GET /api/casinos - Retrieve all casino brands
+- POST /api/casinos - Add new casino brand
+- PUT /api/casinos/:id - Update existing casino brand
+- DELETE /api/casinos/:id - Remove casino brand
+
+**Middleware:**
+- express.json() - Parse JSON request bodies
+- cors - Enable cross-origin requests
+- body-parser - Handle form data (deprecated, using express.json instead)
+- express.static() - Serve static files (HTML, images, etc.)
+
+**Data Structure:**
+Each casino object contains: id, name, logo, offer, games, bonus, payments, terms, link, geos (country targeting)
+
 ## Frontend Architecture
 
-**Static HTML Website**
-- Technology: Pure HTML5 with Bootstrap 5 framework
-- Design Pattern: Single-page application (SPA) approach with client-side rendering
+**Dynamic HTML Website**
+- Technology: Pure HTML5 with Bootstrap 5 framework + JavaScript fetch API
+- Design Pattern: Client-side rendering with API data fetching
 - Styling: Bootstrap 5.3.0 grid system with custom CSS overrides
 - Icons: Font Awesome 6.5.0 for visual elements
-- Rationale: Chosen for simplicity, fast loading times, and ease of deployment without backend complexity
+- Data Source: Fetches casino data from /api/casinos endpoint
 
 **Responsive Design**
 - Mobile-first approach using Bootstrap's responsive grid
 - Viewport meta tag ensures proper scaling on all devices
 - Card-based layout for casino listings with hover effects
-- Pros: Wide browser compatibility, minimal dependencies
-- Cons: Limited dynamic functionality without JavaScript framework
+- Pros: Wide browser compatibility, dynamic content updates
+- Cons: Requires JavaScript enabled for data display
 
 ## SEO and Analytics
 
