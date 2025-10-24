@@ -15,6 +15,10 @@ TheCasinos.live is an independent online casino review and comparison website de
 **Admin Dashboard Implementation:**
 - Built full-stack application with Node.js/Express backend
 - Created admin dashboard at /admin.html for managing casino brands
+- **Added login authentication** - Username/password protection for admin dashboard
+- Session-based authentication using express-session
+- Credentials stored securely in environment variables (ADMIN_USERNAME, ADMIN_PASSWORD)
+- Auto-redirect to login page for unauthorized access attempts
 - Moved casino data from HTML to JSON file (casinos.json)
 - Implemented RESTful API endpoints: GET /api/casinos, POST /api/casinos, PUT /api/casinos/:id, DELETE /api/casinos/:id
 - Main site now loads casino data dynamically from API
