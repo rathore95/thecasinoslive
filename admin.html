@@ -111,9 +111,11 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Logo Path</label>
-              <input type="text" class="form-control" id="casinoLogo" placeholder="images/logo1.png" required>
-              <small class="text-muted">Path to logo image file</small>
+              <label class="form-label">Casino Logo</label>
+              <input type="file" class="form-control" id="casinoLogoFile" accept="image/*">
+              <input type="hidden" id="casinoLogo">
+              <small class="text-muted">Upload a logo image (PNG, JPG, GIF)</small>
+              <div id="logoPreview" class="mt-2"></div>
             </div>
 
             <div class="mb-3">
@@ -132,9 +134,21 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Payment Methods (Font Awesome Icons)</label>
-              <input type="text" class="form-control" id="casinoPayments" placeholder="fab fa-cc-visa, fab fa-cc-mastercard" required>
-              <small class="text-muted">Comma-separated Font Awesome icon classes</small>
+              <label class="form-label">Payment Methods</label>
+              <div class="row g-2" id="paymentMethods">
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-cc-visa" data-name="Visa"> Visa</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-cc-mastercard" data-name="Mastercard"> Mastercard</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-cc-amex" data-name="Amex"> American Express</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-cc-paypal" data-name="PayPal"> PayPal</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-bitcoin" data-name="Crypto"> Crypto</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fas fa-university" data-name="Wire"> Wire Transfer</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fas fa-mobile-alt" data-name="UPI"> UPI</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-apple-pay" data-name="Apple Pay"> Apple Pay</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-google-pay" data-name="Google Pay"> Google Pay</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fas fa-money-bill-wave" data-name="Cash"> Cash</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fas fa-credit-card" data-name="Debit"> Debit Card</label></div>
+                <div class="col-6 col-md-4"><label class="d-flex align-items-center"><input type="checkbox" class="me-2" value="fab fa-stripe" data-name="Stripe"> Stripe</label></div>
+              </div>
             </div>
 
             <div class="mb-3">
@@ -195,7 +209,24 @@
       "BE": "Belgium", "LU": "Luxembourg", "NO": "Norway", "SE": "Sweden", "FI": "Finland",
       "DK": "Denmark", "MX": "Mexico", "BR": "Brazil", "AR": "Argentina", "CL": "Chile",
       "CO": "Colombia", "PE": "Peru", "ZA": "South Africa", "KE": "Kenya", "NG": "Nigeria",
-      "TH": "Thailand", "MY": "Malaysia", "SG": "Singapore", "PH": "Philippines"
+      "TH": "Thailand", "MY": "Malaysia", "SG": "Singapore", "PH": "Philippines",
+      "JP": "Japan", "KR": "South Korea", "CN": "China", "HK": "Hong Kong", "TW": "Taiwan",
+      "ID": "Indonesia", "VN": "Vietnam", "AE": "UAE", "SA": "Saudi Arabia", "IL": "Israel",
+      "TR": "Turkey", "EG": "Egypt", "MA": "Morocco", "GH": "Ghana", "ET": "Ethiopia",
+      "TZ": "Tanzania", "UG": "Uganda", "RW": "Rwanda", "BW": "Botswana", "MU": "Mauritius",
+      "PL": "Poland", "CZ": "Czech Republic", "HU": "Hungary", "RO": "Romania", "GR": "Greece",
+      "PT": "Portugal", "HR": "Croatia", "RS": "Serbia", "BG": "Bulgaria", "SK": "Slovakia",
+      "SI": "Slovenia", "EE": "Estonia", "LV": "Latvia", "LT": "Lithuania", "IS": "Iceland",
+      "RU": "Russia", "UA": "Ukraine", "BY": "Belarus", "KZ": "Kazakhstan", "UZ": "Uzbekistan",
+      "VE": "Venezuela", "EC": "Ecuador", "BO": "Bolivia", "PY": "Paraguay", "UY": "Uruguay",
+      "CR": "Costa Rica", "PA": "Panama", "GT": "Guatemala", "HN": "Honduras", "SV": "El Salvador",
+      "NI": "Nicaragua", "DO": "Dominican Republic", "JM": "Jamaica", "TT": "Trinidad and Tobago",
+      "BB": "Barbados", "BS": "Bahamas", "BZ": "Belize", "CU": "Cuba", "HT": "Haiti",
+      "AO": "Angola", "MZ": "Mozambique", "ZW": "Zimbabwe", "ZM": "Zambia", "MW": "Malawi",
+      "SN": "Senegal", "CI": "Ivory Coast", "CM": "Cameroon", "BJ": "Benin", "TG": "Togo",
+      "MM": "Myanmar", "KH": "Cambodia", "LA": "Laos", "MN": "Mongolia", "BT": "Bhutan",
+      "AF": "Afghanistan", "IQ": "Iraq", "IR": "Iran", "JO": "Jordan", "LB": "Lebanon",
+      "KW": "Kuwait", "QA": "Qatar", "OM": "Oman", "BH": "Bahrain", "YE": "Yemen"
     };
 
     let casinos = [];
@@ -297,9 +328,17 @@
       document.getElementById('casinoOffer').value = casino.offer;
       document.getElementById('casinoLink').value = casino.link;
       document.getElementById('casinoGames').value = casino.games;
-      document.getElementById('casinoPayments').value = casino.payments.join(', ');
       document.getElementById('casinoBonus').value = casino.bonus;
       document.getElementById('casinoTerms').value = casino.terms;
+      
+      document.querySelectorAll('#paymentMethods input[type="checkbox"]').forEach(cb => {
+        cb.checked = casino.payments.includes(cb.value);
+      });
+      
+      if (casino.logo) {
+        document.getElementById('logoPreview').innerHTML = `<img src="${casino.logo}" style="max-width: 150px; border-radius: 8px;">`;
+      }
+      
       selectedCountries = [...casino.geos];
       
       initCountrySelector();
@@ -318,14 +357,55 @@
         return;
       }
 
+      const selectedPayments = [];
+      document.querySelectorAll('#paymentMethods input[type="checkbox"]:checked').forEach(cb => {
+        selectedPayments.push(cb.value);
+      });
+
+      if (selectedPayments.length === 0) {
+        showAlert('Please select at least one payment method', 'warning');
+        return;
+      }
+
+      let logoPath = document.getElementById('casinoLogo').value;
+      const logoFile = document.getElementById('casinoLogoFile').files[0];
+      
+      if (logoFile) {
+        const formData = new FormData();
+        formData.append('logo', logoFile);
+        
+        try {
+          const uploadResponse = await fetch('/api/upload-logo', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const uploadResult = await uploadResponse.json();
+          if (uploadResult.success) {
+            logoPath = uploadResult.path;
+          } else {
+            showAlert('Failed to upload logo', 'danger');
+            return;
+          }
+        } catch (error) {
+          showAlert('Error uploading logo', 'danger');
+          return;
+        }
+      }
+
+      if (!logoPath) {
+        showAlert('Please upload a logo or provide a logo path', 'warning');
+        return;
+      }
+
       const id = document.getElementById('casinoId').value;
       const casinoData = {
         name: document.getElementById('casinoName').value,
-        logo: document.getElementById('casinoLogo').value,
+        logo: logoPath,
         offer: document.getElementById('casinoOffer').value,
         link: document.getElementById('casinoLink').value,
         games: document.getElementById('casinoGames').value,
-        payments: document.getElementById('casinoPayments').value.split(',').map(p => p.trim()),
+        payments: selectedPayments,
         bonus: document.getElementById('casinoBonus').value,
         terms: document.getElementById('casinoTerms').value,
         geos: selectedCountries

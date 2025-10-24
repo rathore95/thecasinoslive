@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
@@ -7,6 +8,37 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 5000;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadsDir = path.join(__dirname, 'images');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+    cb(null, uploadsDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, 'logo-' + uniqueSuffix + ext);
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: function (req, file, cb) {
+    const allowedTypes = /jpeg|jpg|png|gif|webp/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+    
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed!'));
+    }
+  }
+});
 
 app.use(cors({
   origin: true,
@@ -63,6 +95,19 @@ app.get('/api/admin/check', (req, res) => {
     res.json({ authenticated: true, username: req.session.username });
   } else {
     res.json({ authenticated: false });
+  }
+});
+
+app.post('/api/upload-logo', isAuthenticated, upload.single('logo'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, error: 'No file uploaded' });
+    }
+    
+    const filePath = 'images/' + req.file.filename;
+    res.json({ success: true, path: filePath });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Failed to upload file' });
   }
 });
 
