@@ -99,6 +99,19 @@
       color: #ff6b6b !important;
       transform: scale(1.05);
     }
+    .site-logo {
+      height: 50px;
+      margin-right: 15px;
+      filter: drop-shadow(0 2px 8px rgba(168, 85, 247, 0.4));
+      transition: transform 0.3s ease;
+    }
+    .site-logo:hover {
+      transform: scale(1.05);
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+    }
     #about, #contact {
       background: rgba(255, 255, 255, 0.05);
       border-radius: 16px;
@@ -140,7 +153,10 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-black">
     <div class="container">
-      <a class="navbar-brand" href="#">thecasinos.live</a>
+      <a class="navbar-brand" href="#">
+        <img src="images/site-logo.png" alt="TheCasinos.live" class="site-logo">
+        thecasinos.live
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
