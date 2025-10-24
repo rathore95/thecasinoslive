@@ -132,22 +132,31 @@
       color: #fff;
     }
     
-    .age-warning {
-      background: #fff3cd;
-      border: 2px solid #ffc107;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-      text-align: center;
+    .compact-notice-bar {
+      background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+      color: #ffffff;
+      padding: 10px 0;
+      font-size: 0.85rem;
+      border-bottom: 2px solid #ff007f;
     }
-    .age-warning h3 {
-      color: #856404;
-      margin-bottom: 10px;
-      font-size: 1.2rem;
+    .compact-notice-bar .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
     }
-    .age-warning p {
-      color: #856404;
-      margin: 0;
+    .notice-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .notice-item i {
+      color: #ffc107;
+    }
+    .notice-divider {
+      color: #666;
+      font-weight: bold;
     }
     
     .disclaimer-box {
@@ -201,16 +210,17 @@
       font-size: 0.9rem;
     }
     
-    .affiliate-notice {
-      background: #ffe5e5;
-      border: 2px solid #dc3545;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-      text-align: center;
-    }
-    .affiliate-notice strong {
-      color: #721c24;
+    @media (max-width: 768px) {
+      .compact-notice-bar {
+        font-size: 0.75rem;
+        padding: 8px 0;
+      }
+      .compact-notice-bar .container {
+        gap: 10px;
+      }
+      .notice-divider {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -233,6 +243,21 @@
     </div>
   </nav>
 
+  <!-- Compact Notice Bar -->
+  <div class="compact-notice-bar">
+    <div class="container">
+      <div class="notice-item">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span><strong>18+ Only</strong> - Gamble Responsibly</span>
+      </div>
+      <span class="notice-divider">|</span>
+      <div class="notice-item">
+        <i class="fas fa-info-circle"></i>
+        <span><strong>Independent Review Site</strong> - We are NOT a casino. Affiliate links included.</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header class="text-center py-5">
     <div class="container">
@@ -240,21 +265,6 @@
       <p class="lead">Independent Reviews & Comparisons</p>
     </div>
   </header>
-
-  <!-- Age Warning -->
-  <div class="container">
-    <div class="age-warning">
-      <h3><i class="fas fa-exclamation-triangle"></i> 18+ Only - Age Restriction</h3>
-      <p><strong>This website is intended for users 18 years of age or older.</strong> Gambling can be addictive. Please play responsibly.</p>
-    </div>
-  </div>
-
-  <!-- Affiliate Disclosure -->
-  <div class="container">
-    <div class="affiliate-notice">
-      <p><strong>Affiliate Disclosure:</strong> TheCasinos.live is an independent casino review and comparison website. We are NOT a casino. We may receive compensation when you click on links to casinos featured on our site. This helps us provide free content to our users.</p>
-    </div>
-  </div>
 
   <!-- Brands Section -->
   <section id="brands" class="container py-5">
