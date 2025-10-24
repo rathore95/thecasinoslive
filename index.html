@@ -409,12 +409,135 @@
         payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-paypal"],
         bonus: "100 FS + $200",
         terms: "Valid for new users only. 18+."
+      },
+      {
+        id: 5,
+        name: "LuckyWin Casino",
+        logo: "images/logo1.png",
+        offer: "Welcome Bonus: 300% up to $3000 + 50 Free Spins",
+        link: "https://brand5.com",
+        games: "Slots, Poker, Live Dealer",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-bitcoin"],
+        bonus: "300% + 50 FS",
+        terms: "18+. New players only. T&C apply."
+      },
+      {
+        id: 6,
+        name: "Mega Jackpot",
+        logo: "images/logo2.png",
+        offer: "First Deposit Bonus: 250% up to $2500",
+        link: "https://brand6.com",
+        games: "Slots, Blackjack, Roulette, Baccarat",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-paypal"],
+        bonus: "250% Match",
+        terms: "Must be 21+. Wagering requirements apply."
+      },
+      {
+        id: 7,
+        name: "Royal Spins",
+        logo: "images/logo3.png",
+        offer: "Exclusive: 500K GC + 100 Free SC",
+        link: "https://brand7.com",
+        games: "Slots, Video Poker, Table Games",
+        payments: ["fab fa-cc-visa", "fab fa-cc-amex", "fab fa-cc-discover"],
+        bonus: "500K GC",
+        terms: "No purchase necessary. 18+."
+      },
+      {
+        id: 8,
+        name: "Diamond Casino",
+        logo: "images/logo4.png",
+        offer: "VIP Bonus: 400% up to $4000 + 100 FS",
+        link: "https://brand8.com",
+        games: "Live Casino, Slots, Jackpots",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-paypal"],
+        bonus: "400% + 100 FS",
+        terms: "New VIP members only. 21+."
+      },
+      {
+        id: 9,
+        name: "Fortune Palace",
+        logo: "images/logo1.png",
+        offer: "Welcome Package: $5000 + 200 Free Spins",
+        link: "https://brand9.com",
+        games: "Slots, Roulette, Live Games",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-bitcoin"],
+        bonus: "$5000 + 200 FS",
+        terms: "18+. Bonus split over first 5 deposits."
+      },
+      {
+        id: 10,
+        name: "Vegas Nights",
+        logo: "images/logo2.png",
+        offer: "New Player Offer: 350% up to $3500",
+        link: "https://brand10.com",
+        games: "Slots, Craps, Blackjack, Poker",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-amex"],
+        bonus: "350% Match",
+        terms: "21+. T&C apply. New players only."
+      },
+      {
+        id: 11,
+        name: "Crown Casino",
+        logo: "images/logo3.png",
+        offer: "First Deposit: 200% up to $2000 + 75 FS",
+        link: "https://brand11.com",
+        games: "Slots, Live Dealer, Table Games",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-paypal"],
+        bonus: "200% + 75 FS",
+        terms: "Must be 18+. Wagering applies."
+      },
+      {
+        id: 12,
+        name: "Lucky Star",
+        logo: "images/logo4.png",
+        offer: "Mega Bonus: 600K GC + 200 SC FREE",
+        link: "https://brand12.com",
+        games: "Slots, Bingo, Live Casino",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-bitcoin"],
+        bonus: "600K GC + 200 SC",
+        terms: "No purchase necessary. 21+."
+      },
+      {
+        id: 13,
+        name: "Platinum Play",
+        logo: "images/logo1.png",
+        offer: "Welcome Bonus: 275% up to $2750",
+        link: "https://brand13.com",
+        games: "Slots, Roulette, Poker, Blackjack",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-discover"],
+        bonus: "275% Match",
+        terms: "18+. New players. T&C apply."
+      },
+      {
+        id: 14,
+        name: "Golden Reels",
+        logo: "images/logo2.png",
+        offer: "Exclusive Offer: 450K GC + 120 SC + 25 FS",
+        link: "https://brand14.com",
+        games: "Slots, Jackpots, Live Games",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-cc-paypal"],
+        bonus: "450K GC + 25 FS",
+        terms: "Void where prohibited. Must be 21+."
+      },
+      {
+        id: 15,
+        name: "Ace Casino",
+        logo: "images/logo3.png",
+        offer: "First Deposit: 300% up to $3000 + 150 FS",
+        link: "https://brand15.com",
+        games: "Slots, Table Games, Live Casino",
+        payments: ["fab fa-cc-visa", "fab fa-cc-mastercard", "fab fa-bitcoin"],
+        bonus: "300% + 150 FS",
+        terms: "Must be 18+. Wagering requirements apply."
       }
     ];
 
     const container = document.getElementById("brands-container");
+    let displayedCount = 0;
+    const initialDisplay = 10;
 
-    brands.forEach(b => {
+    function createBrandCard(b) {
       const card = document.createElement("div");
       card.className = "brand-card";
 
@@ -436,8 +559,42 @@
           <div><strong>Terms:</strong> ${b.terms}</div>
         </div>
       `;
-      container.appendChild(card);
-    });
+      return card;
+    }
+
+    function loadBrands(count) {
+      const brandsToShow = brands.slice(displayedCount, displayedCount + count);
+      brandsToShow.forEach(b => {
+        container.appendChild(createBrandCard(b));
+      });
+      displayedCount += brandsToShow.length;
+      
+      if (displayedCount >= brands.length) {
+        const seeMoreBtn = document.getElementById('seeMoreBtn');
+        if (seeMoreBtn) {
+          seeMoreBtn.style.display = 'none';
+        }
+      }
+    }
+
+    loadBrands(initialDisplay);
+
+    if (brands.length > initialDisplay) {
+      const btnContainer = document.createElement("div");
+      btnContainer.className = "text-center mt-4";
+      btnContainer.innerHTML = `
+        <button id="seeMoreBtn" class="btn btn-play px-5 py-3" style="font-size: 1.1rem;">
+          <i class="fas fa-chevron-down me-2"></i>See More Casinos
+        </button>
+      `;
+      container.appendChild(btnContainer);
+
+      document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'seeMoreBtn') {
+          loadBrands(10);
+        }
+      });
+    }
 
     // Contact Form Handler
     document.getElementById('contactForm').addEventListener('submit', function(e) {
