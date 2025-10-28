@@ -143,6 +143,18 @@ app.delete('/api/casinos/:id', isAuthenticated, (req, res) => {
   }
 });
 
+app.get('/admin', (req, res) => {
+  if (req.session && req.session.isAuthenticated) {
+    res.sendFile(path.join(__dirname, 'admin.html'));
+  } else {
+    res.redirect('/admin-login.html');
+  }
+});
+
+app.get('/admin-login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin-login.html'));
+});
+
 app.get('/admin.html', (req, res) => {
   if (req.session && req.session.isAuthenticated) {
     res.sendFile(path.join(__dirname, 'admin.html'));
