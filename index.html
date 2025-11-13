@@ -222,9 +222,105 @@
         display: none;
       }
     }
+    
+    .age-gate-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .age-gate-content {
+      background: white;
+      padding: 50px;
+      border-radius: 20px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    
+    .age-gate-content h2 {
+      color: #000;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    
+    .age-gate-content p {
+      color: #555;
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+    
+    .age-gate-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    
+    .age-gate-buttons button {
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-confirm {
+      background: #28a745;
+      color: white;
+    }
+    
+    .btn-confirm:hover {
+      background: #218838;
+      transform: scale(1.05);
+    }
+    
+    .btn-leave {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .btn-leave:hover {
+      background: #c82333;
+      transform: scale(1.05);
+    }
+    
+    .affiliate-disclosure {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #856404;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Age Verification Gate -->
+  <div id="ageGate" class="age-gate-overlay" style="display: none;">
+    <div class="age-gate-content">
+      <i class="fas fa-exclamation-triangle" style="font-size: 60px; color: #ffc107; margin-bottom: 20px;"></i>
+      <h2>Age Verification Required</h2>
+      <p>You must be at least 18 years old to access this website. This site contains gambling-related content.</p>
+      <div class="age-gate-buttons">
+        <button class="btn-confirm" onclick="confirmAge()">
+          <i class="fas fa-check me-2"></i>I am 18+
+        </button>
+        <button class="btn-leave" onclick="leavesite()">
+          <i class="fas fa-times me-2"></i>No / Leave
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-black">
@@ -255,6 +351,14 @@
         <i class="fas fa-info-circle"></i>
         <span><strong>Independent Review Site</strong> - We are NOT a casino. Affiliate links included.</span>
       </div>
+    </div>
+  </div>
+
+  <!-- Affiliate Disclosure -->
+  <div class="container mt-3">
+    <div class="affiliate-disclosure">
+      <i class="fas fa-handshake me-2"></i>
+      <strong>Affiliate Disclosure:</strong> We may receive commissions when you sign up via our links. Our rankings and opinions are independent and not influenced by affiliate partnerships.
     </div>
   </div>
 
@@ -345,18 +449,21 @@
         <a href="https://www.ncpgambling.org" target="_blank" rel="noopener">NCPG</a>
       </p>
       <p style="font-size: 0.9rem; margin: 15px 0;">
-        TheCasinos.live is an independent casino review and comparison website. We are NOT a casino operator. 
-        We may receive affiliate commissions from featured casinos. All reviews are editorially independent.
+        <i class="fas fa-handshake"></i> <strong>Affiliate Disclosure:</strong> We may receive commissions when you sign up via our links. Our rankings and opinions are independent and not influenced by affiliate partnerships.
       </p>
       <p style="font-size: 0.85rem;">
-        © 2025 TheCasinos.live | All Rights Reserved | We only recommend verified and licensed online casinos
+        © 2025 TheCasinos.live | 18+ Only | Play Responsibly
+      </p>
+      <p style="font-size: 0.85rem; margin-top: 10px;">
+        TheCasinos.live is owned and operated by Migo Media Private Limited (India).
       </p>
       
       <div class="footer-links">
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#terms">Terms of Use</a>
-        <a href="#responsible">Responsible Gambling</a>
-        <a href="#about">About Us</a>
+        <a href="/about">About</a>
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/responsible-gambling">Responsible Gambling</a>
+        <a href="/contact">Contact</a>
       </div>
     </div>
   </footer>
@@ -438,6 +545,16 @@
       const card = document.createElement("div");
       card.className = "brand-card";
 
+      const license = b.license || { regulator: 'Licensed', number: 'N/A' };
+      
+      // Format license text according to regulator
+      let licenseText;
+      if (license.regulator.includes('Malta')) {
+        licenseText = `Licensed and regulated by the ${license.regulator} (${license.number}).`;
+      } else {
+        licenseText = `Licensed and regulated under ${license.regulator} (${license.number}).`;
+      }
+
       card.innerHTML = `
         <div class="d-flex align-items-center justify-content-between flex-wrap">
           <div class="d-flex align-items-center">
@@ -447,13 +564,16 @@
               <p class="mb-0">${b.offer}</p>
             </div>
           </div>
-          <a href="${b.link}" target="_blank" rel="noopener nofollow" class="btn btn-play mt-3 mt-md-0 px-4 py-2">Visit Casino</a>
+          <a href="/out?brand=${b.id}" class="btn btn-play mt-3 mt-md-0 px-4 py-2">Visit Casino</a>
         </div>
         <div class="info-grid mt-3">
           <div><strong>Games:</strong> ${b.games}</div>
           <div><strong>Bonus:</strong> ${b.bonus}</div>
           <div><strong>Payments:</strong> ${b.payments.map(p => `<i class="${p} me-2"></i>`).join('')}</div>
-          <div><strong>Terms:</strong> ${b.terms}</div>
+          <div style="font-size: 0.9rem;"><strong>${licenseText}</strong></div>
+        </div>
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 0.85rem; color: #666;">
+          <i class="fas fa-info-circle me-1"></i> ${b.terms || 'New players only. 18+. Deposit & wagering requirements apply. T&Cs apply.'}
         </div>
       `;
       return card;
@@ -525,6 +645,40 @@
       initializeBrands();
     }
 
+    // Age Gate Functions
+    // Note: Age verification is ONLY shown on gambling content pages (homepage, /out).
+    // Legal pages (/privacy, /terms, /about, etc.) are EXEMPT for Google Ads compliance
+    // and to allow Googlebot to crawl them without barriers.
+    
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function setCookie(name, value, hours) {
+      const date = new Date();
+      date.setTime(date.setTime() + (hours * 60 * 60 * 1000));
+      document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`;
+    }
+
+    function checkAgeGate() {
+      // Only show age gate on gambling content pages
+      if (!getCookie('age_confirmed')) {
+        document.getElementById('ageGate').style.display = 'flex';
+      }
+    }
+
+    function confirmAge() {
+      setCookie('age_confirmed', '1', 12);
+      document.getElementById('ageGate').style.display = 'none';
+    }
+
+    function leavesite() {
+      window.location.href = 'https://www.google.com';
+    }
+
+    checkAgeGate();
     initApp();
 
     // Contact Form Handler

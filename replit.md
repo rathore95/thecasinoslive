@@ -10,7 +10,22 @@ TheCasinos.live is an independent online casino review and comparison website de
 - Sequential numbering (1, 2, 3...) for filtered results
 - Compliance notices (18+, affiliate disclosure, responsible gambling)
 
-# Recent Changes (October 24, 2025)
+# Recent Changes (November 7, 2025)
+
+**Google Ads Compliance Implementation:**
+- **Age Verification Modal** - Cookie-based age gate (12-hour expiry) shown ONLY on gambling content pages (homepage, /out)
+- **Legal Pages EXEMPT** - Privacy, Terms, About, Responsible Gambling, Contact pages load WITHOUT age gate (allows Googlebot crawling)
+- **Legal Pages Created** - Five comprehensive compliance pages: Privacy Policy, Terms of Use, Responsible Gambling, About Us, Contact
+- **/out Redirect Page** - All affiliate links route through /out?brand=id page showing license info before redirect
+- **License Transparency** - Each casino card displays regulator name and license number
+- **Compliance Terms** - Visible T&C notice on every brand card (18+, new players only, wagering applies)
+- **Affiliate Disclosure** - Clear disclosure in header notice bar and footer
+- **License Database** - casinos.json updated with license data (regulator, number, verificationUrl) for all brands
+- **Legal Page Routes** - Server.js routes for /about, /terms, /privacy, /responsible-gambling, /contact, /out
+- **Footer Updates** - Working links to all legal pages with visible affiliate disclosure
+- **Manual Redirect Flow** - /out page requires manual "Proceed to Official Site" click (no auto-redirect)
+
+# Previous Changes (October 24, 2025)
 
 **Admin Dashboard Implementation:**
 - Built full-stack application with Node.js/Express backend

@@ -7,23 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-// Redirect all HTTP and www requests to HTTPS non-www
-app.use((req, res, next) => {
-  // Force HTTPS
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(301, 'https://' + req.headers.host + req.url);
-  }
-
-  // Redirect www to non-www
-  if (req.headers.host.startsWith('www.')) {
-    const newHost = req.headers.host.replace(/^www\./, '');
-    return res.redirect(301, 'https://' + newHost + req.url);
-  }
-
-  next();
-});
-
+const PORT = 5000;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -159,18 +143,6 @@ app.delete('/api/casinos/:id', isAuthenticated, (req, res) => {
   }
 });
 
-app.get('/admin', (req, res) => {
-  if (req.session && req.session.isAuthenticated) {
-    res.sendFile(path.join(__dirname, 'admin.html'));
-  } else {
-    res.redirect('/admin-login.html');
-  }
-});
-
-app.get('/admin-login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin-login.html'));
-});
-
 app.get('/admin.html', (req, res) => {
   if (req.session && req.session.isAuthenticated) {
     res.sendFile(path.join(__dirname, 'admin.html'));
@@ -179,8 +151,32 @@ app.get('/admin.html', (req, res) => {
   }
 });
 
+app.get('/out', (req, res) => {
+  res.sendFile(path.join(__dirname, 'out.html'));
+});
+
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, 'about.html'));
+});
+
+app.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, 'terms.html'));
+});
+
+app.get('/privacy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'privacy.html'));
+});
+
+app.get('/responsible-gambling', (req, res) => {
+  res.sendFile(path.join(__dirname, 'responsible-gambling.html'));
+});
+
+app.get('/contact', (req, res) => {
+  res.sendFile(path.join(__dirname, 'contact.html'));
+});
+
 app.use(express.static('.'));
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
